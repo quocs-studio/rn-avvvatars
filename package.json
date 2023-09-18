@@ -1,6 +1,6 @@
 {
   "name": "rn-avvvatars",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "generates unique placeholder avatars with either characters or shapes for your react native project",
   "main": "src/index.tsx",
   "scripts": {

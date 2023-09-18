@@ -31,11 +31,12 @@ const Wrapper = styled.View<WrapperProps>`
   width: ${p => p.size}px;
   height: ${p => p.size}px;
   border-radius: ${p => p.$radius || p.size}px;
-  background-color: #${p => p.color};
+  background-color: ${p => p.color};
 
-  ${p => p.$border &&
-    `border: ${p.$borderSize}px solid ${p.$borderColor};`
-  }
+  ${p => p.$border && `
+    border-width: ${p.$borderSize}px;
+    border-color: ${p.$borderColor};
+  `}
 
   box-sizing: border-box;
 
@@ -49,9 +50,11 @@ const Wrapper = styled.View<WrapperProps>`
   }
 
   ${p => p.$shadow && `
-    box-shadow: 
-      0px 3px 8px rgba(18, 18, 18, 0.04),  
-      0px 1px 1px rgba(18, 18, 18, 0.02);
+    shadow-color: rgb(18, 18, 18);
+    shadow-offset: 0px 3px;
+    shadow-opacity: 0.04;
+    shadow-radius: 8px;
+    elevation: 1;
   `}
 ` as React.FC<WrapperProps & ViewProps>
 
@@ -66,7 +69,7 @@ const Text = styled.Text<{ color: string, size: number }>`
   /* font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; */
 
   font-size: ${p => Math.round(p.size / 100 * 37)}px;
-  color: #${p => p.color};
+  color: ${p => p.color};
   line-height: 0;
   text-transform: uppercase;
   font-weight: 500;
@@ -86,6 +89,11 @@ interface Params {
   borderSize?: number
   borderColor?: string
   radius?: number
+
+  // colors
+  backgroundColors?: string[]
+  textColors?: string[]
+  shapeColors?: string[]
 }
 
 export default function Avvvatars(params: Params) {
@@ -98,7 +106,10 @@ export default function Avvvatars(params: Params) {
     shadow = DEFAULTS.shadow,
     border = DEFAULTS.border,
     borderSize = DEFAULTS.borderSize,
-    borderColor = DEFAULTS.borderColor
+    borderColor = DEFAULTS.borderColor,
+    backgroundColors = BACKGROUND_COLORS,
+    textColors = TEXT_COLORS,
+    shapeColors = SHAPE_COLORS
   } = params
 
   // get first two letters
@@ -106,14 +117,15 @@ export default function Avvvatars(params: Params) {
 
   // generate unique random for given value
   // there is 20 colors in array so generate between 0 and 19
-  const key = randiman({ value, min: 0, max: 19 });
+  const bgKey = randiman({ value, min: 0, max: backgroundColors.length - 1 });
+  const textKey = randiman({ value, min: 0, max: textColors.length - 1 });
   // there is 60 shapes so generate between 1 and 60
   const shapeKey = randiman({ value, min: 1, max: 60 })
 
   return (
     <Wrapper
       size={size}
-      color={BACKGROUND_COLORS[key]}
+      color={backgroundColors[bgKey]}
       $shadow={shadow}
       $border={border}
       $borderSize={borderSize}
@@ -122,7 +134,7 @@ export default function Avvvatars(params: Params) {
     >
       {style === 'character' ?
         <Text
-          color={TEXT_COLORS[key]}
+          color={textColors[textKey]}
           size={size}
         >
           {name}
@@ -130,7 +142,7 @@ export default function Avvvatars(params: Params) {
         :
         <Shape
           name={`Shape${shapeKey}` as ShapeNames}
-          color={SHAPE_COLORS[key]}
+          color={shapeColors[randiman({ value, min: 1, max: shapeColors.length - 1 })]}
           size={Math.round((size) / 100 * 50)}
         />
       }

@@ -20,7 +20,7 @@ export const ShapeWrapper = styled.View<Props>`
   justify-content: center;
   vertical-align: middle;
 
-  color: #${p => p.color || 'currentColor'};
+  color: ${p => p.color || 'currentColor'};
 `
 
 export const shapeList = Object.keys(shapes)
