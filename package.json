@@ -1,10 +1,8 @@
 {
-  "name": "avvvatars-react",
-  "version": "0.4.2",
-  "description": "generates unique placeholder avatars with either characters or shapes for your react project",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/avvvatars-react.esm.js",
+  "name": "rn-avvvatars",
+  "version": "0.0.1",
+  "description": "generates unique placeholder avatars with either characters or shapes for your react native project",
+  "main": "src/index.tsx",
   "scripts": {
     "build": "tsdx build"
   },
@@ -19,14 +17,16 @@
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "typescript": "^3.7.4",
-    "tsdx": "^0.14.1"
+    "tsdx": "^0.14.1",
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "react": ">= 16",
     "react-dom": ">= 16"
   },
   "dependencies": {
-    "goober": "^2.1.8"
+    "react-native": "^0.72.4",
+    "react-native-svg": "^13.13.0",
+    "styled-components": "^6.0.8"
   }
 }

@@ -1,11 +1,10 @@
-
 <div align="center">
   <a href="https://avvvatars.com"><img src="https://github.com/nusu/avvvatars/raw/main/thumbnail.png" alt="Avvvatars" height="464"></a>
 </div>
 
 # Avvvatars
 
-Beautifully crafted unique avatar placeholder for your next react project
+Beautifully crafted unique avatar placeholder for your next react _native_ project
 
 Lightweight and customizable ❤️
 
@@ -31,13 +30,13 @@ Built by [Nusu Alabuga](https://twitter.com/nusualabuga) and [Oguz Yagiz Kara](h
 **With yarn**
 
 ```jsx
-yarn add avvvatars-react
+yarn add rn-avvvatars
 ```
 
 **With npm**
 
 ```jsx
-npm install avvvatars-react
+npm install rn-avvvatars
 ```
 
 ## Getting Started
@@ -45,12 +44,10 @@ npm install avvvatars-react
 Import Avvvatars to your app, then use it anywhere you want.
 
 ```jsx
-import Avvvatars from 'avvvatars-react'
+import Avvvatars from "rn-avvvatars";
 
 export default function MyAvatar() {
-  return (
-    <Avvvatars value="best_user@gmail.com" />
-  )
+  return <Avvvatars value="best_user@gmail.com" />;
 }
 ```
 
@@ -58,7 +55,7 @@ export default function MyAvatar() {
 
 ### `value: string`
 
-This is required for plugin to work, each value generates a random avatar to unique to this value, so each time plugin renders, you will get the same results. 
+This is required for plugin to work, each value generates a random avatar to unique to this value, so each time plugin renders, you will get the same results.
 
 ```jsx
 <Avvvatars value="best_user@gmail.com" />
@@ -132,7 +129,7 @@ Override border color
 
 ## Figma
 
-If you want to access design files to change something or customize it to your own, use our [Figma File](https://www.figma.com/community/file/1084861895116393858/Avvvatars.com---Open-Source-React-UI-Avatar-Library-(Community))
+If you want to access design files to change something or customize it to your own, use our [Figma File](<https://www.figma.com/community/file/1084861895116393858/Avvvatars.com---Open-Source-React-UI-Avatar-Library-(Community)>)
 
 ## License
 

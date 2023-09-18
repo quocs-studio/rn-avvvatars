@@ -2,22 +2,14 @@ import * as React from 'react';
 import randiman from './lib/random'
 import { BACKGROUND_COLORS, TEXT_COLORS, SHAPE_COLORS } from './lib/colors'
 import Shape, { ShapeNames } from './shape/Shape'
-import { styled, setup } from 'goober'
-
-// initialize goober
-setup(React.createElement, undefined, undefined, (props: any) => {
-  for (let prop in props) {
-      if (prop[0] === '$') {
-          delete props[prop];
-      }
-  }
-});
+import styled from 'styled-components/native'
+import { ViewProps, TextProps } from 'react-native';
 
 const DEFAULTS = {
   style: "character",
   size: 32,
   shadow: false,
-  
+
   border: false,
   borderSize: 2,
   borderColor: "#fff"
@@ -35,14 +27,14 @@ interface WrapperProps {
   $radius?: number
 }
 
-const Wrapper = styled('div')<WrapperProps>`
+const Wrapper = styled.View<WrapperProps>`
   width: ${p => p.size}px;
   height: ${p => p.size}px;
   border-radius: ${p => p.$radius || p.size}px;
   background-color: #${p => p.color};
 
-  ${ p => p.$border &&
-  `border: ${p.$borderSize}px solid ${p.$borderColor};`
+  ${p => p.$border &&
+    `border: ${p.$borderSize}px solid ${p.$borderColor};`
   }
 
   box-sizing: border-box;
@@ -61,28 +53,27 @@ const Wrapper = styled('div')<WrapperProps>`
       0px 3px 8px rgba(18, 18, 18, 0.04),  
       0px 1px 1px rgba(18, 18, 18, 0.02);
   `}
-`
+` as React.FC<WrapperProps & ViewProps>
 
 // implement size
-const Text = styled('p')<{ color: string, size: number }>`
+const Text = styled.Text<{ color: string, size: number }>`
   /* Reset */
   margin: 0;
   padding: 0;
   text-align: center;
   box-sizing: border-box;
 
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; */
 
   font-size: ${p => Math.round(p.size / 100 * 37)}px;
   color: #${p => p.color};
   line-height: 0;
   text-transform: uppercase;
   font-weight: 500;
-`
+` as React.FC<TextProps & { color: string, size: number }>
 
 type Style = 'character' | 'shape'
-interface Params
-{
+interface Params {
   displayValue?: string
   // this should be unique to user, it can be email, user id, or full name
   value: string
@@ -97,16 +88,15 @@ interface Params
   radius?: number
 }
 
-export default function Avvvatars(params: Params)
-{
-  const { 
+export default function Avvvatars(params: Params) {
+  const {
     style = DEFAULTS.style,
-    displayValue, 
-    value, 
+    displayValue,
+    value,
     radius,
-    size = DEFAULTS.size, 
-    shadow = DEFAULTS.shadow, 
-    border = DEFAULTS.border, 
+    size = DEFAULTS.size,
+    shadow = DEFAULTS.shadow,
+    border = DEFAULTS.border,
     borderSize = DEFAULTS.borderSize,
     borderColor = DEFAULTS.borderColor
   } = params
@@ -121,24 +111,24 @@ export default function Avvvatars(params: Params)
   const shapeKey = randiman({ value, min: 1, max: 60 })
 
   return (
-    <Wrapper 
-      size={size} 
-      color={BACKGROUND_COLORS[key]} 
-      $shadow={shadow} 
-      $border={border} 
+    <Wrapper
+      size={size}
+      color={BACKGROUND_COLORS[key]}
+      $shadow={shadow}
+      $border={border}
       $borderSize={borderSize}
       $borderColor={borderColor}
       $radius={radius}
     >
       {style === 'character' ?
-        <Text 
+        <Text
           color={TEXT_COLORS[key]}
           size={size}
         >
           {name}
         </Text>
         :
-        <Shape 
+        <Shape
           name={`Shape${shapeKey}` as ShapeNames}
           color={SHAPE_COLORS[key]}
           size={Math.round((size) / 100 * 50)}
