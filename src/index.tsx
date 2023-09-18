@@ -96,21 +96,20 @@ interface Params {
   shapeColors?: string[]
 }
 
-export default function Avvvatars(params: Params) {
-  const {
-    style = DEFAULTS.style,
-    displayValue,
-    value,
-    radius,
-    size = DEFAULTS.size,
-    shadow = DEFAULTS.shadow,
-    border = DEFAULTS.border,
-    borderSize = DEFAULTS.borderSize,
-    borderColor = DEFAULTS.borderColor,
-    backgroundColors = BACKGROUND_COLORS,
-    textColors = TEXT_COLORS,
-    shapeColors = SHAPE_COLORS
-  } = params
+export default function Avvvatars({
+  style = DEFAULTS.style as Style,
+  displayValue,
+  value,
+  radius,
+  size = DEFAULTS.size,
+  shadow = DEFAULTS.shadow,
+  border = DEFAULTS.border,
+  borderSize = DEFAULTS.borderSize,
+  borderColor = DEFAULTS.borderColor,
+  backgroundColors = BACKGROUND_COLORS,
+  textColors = TEXT_COLORS,
+  shapeColors = SHAPE_COLORS
+}: Params) {
 
   // get first two letters
   const name = String(displayValue || value).substring(0, 2);
