@@ -38,16 +38,9 @@ const Wrapper = styled.View<WrapperProps>`
     border-color: ${p.$borderColor};
   `}
 
-  box-sizing: border-box;
-
   display: flex;
   justify-content: center;
   align-items: center;
-  user-select: none;
-
-  &:hover {
-    z-index: 3;
-  }
 
   ${p => p.$shadow && `
     shadow-color: rgb(18, 18, 18);
@@ -64,7 +57,6 @@ const Text = styled.Text<{ color: string, size: number }>`
   margin: 0;
   padding: 0;
   text-align: center;
-  box-sizing: border-box;
 
   /* font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; */
 
