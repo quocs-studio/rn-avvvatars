@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ComponentType } from 'react'
+import { View, StyleSheet } from 'react-native'
 import * as shapes from './shapes'
 import { ShapeProps } from './shapes'
-import styled from 'styled-components/native';
 
 export type ShapeNames = keyof typeof shapes
 interface ShapeList {
@@ -14,14 +14,6 @@ export interface Props {
   size?: number
   color: string
 }
-
-export const ShapeWrapper = styled.View<Props>`
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-
-  color: ${p => p.color || 'currentColor'};
-`
 
 export const shapeList = Object.keys(shapes)
 
@@ -36,12 +28,20 @@ export default function Shape(props: Props) {
   }
 
   return (
-    <ShapeWrapper {...props}>
+    <View style={styles.shapeWrapper} {...props}>
       <Tag
         width={size}
         height={size}
         color={props.color}
       />
-    </ShapeWrapper>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  shapeWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    verticalAlign: 'middle',
+  },
+})

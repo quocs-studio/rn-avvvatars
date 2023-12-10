@@ -1,8 +1,10 @@
 {
   "name": "rn-avvvatars",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "generates unique placeholder avatars with either characters or shapes for your react native project",
-  "main": "src/index.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/avvvatars-react.esm.js",
   "scripts": {
     "build": "tsdx build"
   },
@@ -11,7 +13,7 @@
   "keywords": [
     "placeholder avatars",
     "avatars",
-    "react",
+    "react native",
     "random avatar"
   ],
   "devDependencies": {
@@ -26,7 +28,6 @@
   },
   "dependencies": {
     "react-native": "^0.72.4",
-    "react-native-svg": "^13.13.0",
-    "styled-components": "^6.0.8"
+    "react-native-svg": "^13.13.0"
   }
 }

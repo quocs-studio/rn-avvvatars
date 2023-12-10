@@ -2,14 +2,11 @@ import * as React from 'react';
 import randiman from './lib/random'
 import { BACKGROUND_COLORS, TEXT_COLORS, SHAPE_COLORS } from './lib/colors'
 import Shape, { ShapeNames } from './shape/Shape'
-import styled from 'styled-components/native'
-import { ViewProps, TextProps } from 'react-native';
+import { ViewProps, TextProps, StyleSheet, View, Text, ViewStyle, TextStyle } from 'react-native';
 
 const DEFAULTS = {
   style: "character",
   size: 32,
-  shadow: false,
-
   border: false,
   borderSize: 2,
   borderColor: "#fff"
@@ -18,54 +15,11 @@ const DEFAULTS = {
 interface WrapperProps {
   size: number
   color: string
-
-  $shadow?: boolean
-
   $border?: boolean
   $borderSize?: number
   $borderColor?: string
   $radius?: number
 }
-
-const Wrapper = styled.View<WrapperProps>`
-  width: ${p => p.size}px;
-  height: ${p => p.size}px;
-  border-radius: ${p => p.$radius || p.size}px;
-  background-color: ${p => p.color};
-
-  ${p => p.$border && `
-    border-width: ${p.$borderSize}px;
-    border-color: ${p.$borderColor};
-  `}
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ${p => p.$shadow && `
-    shadow-color: rgb(18, 18, 18);
-    shadow-offset: 0px 3px;
-    shadow-opacity: 0.04;
-    shadow-radius: 8px;
-    elevation: 1;
-  `}
-` as React.FC<WrapperProps & ViewProps>
-
-// implement size
-const Text = styled.Text<{ color: string, size: number }>`
-  /* Reset */
-  margin: 0;
-  padding: 0;
-  text-align: center;
-
-  /* font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; */
-
-  font-size: ${p => Math.round(p.size / 100 * 37)}px;
-  color: ${p => p.color};
-  line-height: 0;
-  text-transform: uppercase;
-  font-weight: 500;
-` as React.FC<TextProps & { color: string, size: number }>
 
 type Style = 'character' | 'shape'
 interface Params {
@@ -73,8 +27,11 @@ interface Params {
   // this should be unique to user, it can be email, user id, or full name
   value: string
   size?: number
-  shadow?: boolean
   style?: Style
+  wrapperStyle?: ViewStyle
+  wrapperProps?: ViewProps
+  textStyle?: TextStyle
+  textProps?: TextProps
 
   // toggle border
   border?: boolean
@@ -89,12 +46,15 @@ interface Params {
 }
 
 export default function Avvvatars({
+  wrapperStyle,
+  wrapperProps,
+  textStyle,
+  textProps,
   style = DEFAULTS.style as Style,
   displayValue,
   value,
   radius,
   size = DEFAULTS.size,
-  shadow = DEFAULTS.shadow,
   border = DEFAULTS.border,
   borderSize = DEFAULTS.borderSize,
   borderColor = DEFAULTS.borderColor,
@@ -114,19 +74,35 @@ export default function Avvvatars({
   const shapeKey = randiman({ value, min: 1, max: 60 })
 
   return (
-    <Wrapper
-      size={size}
-      color={backgroundColors[bgKey]}
-      $shadow={shadow}
-      $border={border}
-      $borderSize={borderSize}
-      $borderColor={borderColor}
-      $radius={radius}
+    <View
+      style={[
+        styles.wrapper,
+        {
+          width: size,
+          height: size,
+          borderRadius: radius || size,
+          backgroundColor: backgroundColors[bgKey]
+        },
+        border && {
+          borderWidth: borderSize,
+          borderColor,
+          elevation: 1
+        },
+        wrapperStyle
+      ]}
+      {...wrapperProps}
     >
       {style === 'character' ?
         <Text
-          color={textColors[textKey]}
-          size={size}
+          style={[
+            styles.text,
+            {
+              fontSize: Math.round(size / 100 * 37),
+              color: textColors[textKey]
+            },
+            textStyle
+          ]}
+          {...textProps}
         >
           {name}
         </Text>
@@ -137,6 +113,24 @@ export default function Avvvatars({
           size={Math.round((size) / 100 * 50)}
         />
       }
-    </Wrapper>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    verticalAlign: 'middle',
+  },
+  text: {
+    margin: 0,
+    padding: 0,
+    textAlign: 'center',
+    fontSize: 12,
+    color: '#fff',
+    textTransform: 'uppercase',
+    fontWeight: 'bold'
+  }
+})
